@@ -2,6 +2,7 @@ package com.montaury.mus.jeu.joueur;
 
 import com.montaury.mus.console.InterfaceJoueurHumain;
 import com.montaury.mus.jeu.carte.Carte;
+import com.montaury.mus.jeu.Equipe;
 import java.util.List;
 
 public class Joueur {
@@ -9,22 +10,27 @@ public class Joueur {
     return new Joueur(nom, new InterfaceJoueurHumain());
   }
 
-  public static Joueur ordinateur() {
-    return new Joueur("Ordinateur", new InterfaceJoueurOrdinateur());
+  public static Joueur ordinateur(String nom) {
+    return new Joueur(nom , new InterfaceJoueurOrdinateur());
   }
 
   private final String nom;
   public final InterfaceJoueur interfaceJoueur;
   private final Main main = Main.vide();
+  private Equipe equipe;
 
   public Joueur(String nom, InterfaceJoueur interfaceJoueur) {
     this.nom = nom;
     this.interfaceJoueur = interfaceJoueur;
+    this.equipe = null;
   }
 
   public String nom() {
     return nom;
   }
+  public Equipe getEquipe() { return  equipe; }
+
+  public void setEquipe(Equipe equipe) { this.equipe = equipe;}
 
   public Main main() {
     return main;

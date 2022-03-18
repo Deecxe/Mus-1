@@ -1,11 +1,14 @@
 package com.montaury.mus.jeu.tour.phases;
 
+import com.montaury.mus.jeu.Equipe;
 import com.montaury.mus.jeu.Opposants;
 import com.montaury.mus.jeu.carte.Defausse;
 import com.montaury.mus.jeu.carte.Paquet;
 import com.montaury.mus.jeu.evenements.Evenements;
 import com.montaury.mus.jeu.joueur.Joueur;
 import com.montaury.mus.jeu.tour.phases.dialogue.choix.TypeChoix;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.montaury.mus.jeu.tour.phases.dialogue.choix.TypeChoix.MINTZA;
@@ -24,15 +27,26 @@ public class Mus {
   }
 
   public void jouer(Opposants opposants) {
-    var joueursDansLOrdre = opposants.dansLOrdre();
-    joueursDansLOrdre.forEach(joueur -> joueur.main().jeterTout());
 
+    List<Joueur> joueurs = new ArrayList<>();
+    var joueursDansLOrdre = opposants.dansLOrdre();
+
+
+    for (Equipe equipe:joueursDansLOrdre)
+    {
+      for (Joueur joueur:equipe.getListJoueur())
+      {
+        joueur.main().jeterTout();
+        joueurs.add(joueur);
+
+      }
+    }
     while (true) {
-      joueursDansLOrdre.forEach(this::completerMain);
-      if (!veulentAllerMus(joueursDansLOrdre)) {
+      joueurs.forEach(this::completerMain);
+      if (!veulentAllerMus(joueurs)) {
         break;
       }
-      joueursDansLOrdre.forEach(this::allerMus);
+      joueurs.forEach(this::allerMus);
     }
   }
 
